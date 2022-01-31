@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 let title;
 let screens;
 let screenPrice;
@@ -9,7 +8,6 @@ let adaptive;
 console.log("Any string");
 
 alert("Сообщение с любым текстом)");
-=======
 const title = "Project";
 const screens = "Простые, Сложные, Интерактивные";
 const screenPrice = 33;
@@ -32,4 +30,3 @@ console.log(screens.toLocaleLowerCase().split(" "));
 console.log(
   `Процент откуата посреднику за работу: ${fullPrice * (rollback / 100)}`
 );
->>>>>>> lesson02
