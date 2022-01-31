@@ -1,5 +1,3 @@
-"use strict";
-
 const rollback = 99;
 
 const title = prompt("Как называется ваш проект?");
