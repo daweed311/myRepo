@@ -7,7 +7,7 @@ let service2 = prompt("Какой дополнительный тип услуг
 let servicePrice2 = +prompt("Сколько это будет стоить?");
 let rollback = 99;
 let priceForWork = rollback / 100;
-let allServicePrice, servicePercentPrice, fullPrice;
+let allServicePrice, servicePercentPrice, fullPrice, rollbackMessage;
 
 const screens = prompt(
   "Какие типы экранов нужно разработать?",
@@ -20,9 +20,9 @@ const getAllServicePrices = function (price1, price2) {
 
 allServicePrice = getAllServicePrices(servicePrice1, servicePrice2);
 
-const getFullPrice = function (screen, services) {
+function getFullPrice(screen, services) {
   return screen + services;
-};
+}
 
 fullPrice = getFullPrice(screenPrice, allServicePrice);
 
@@ -43,17 +43,19 @@ const showTypeOf = function (variable) {
   console.log(variable, typeof variable);
 };
 
-const getRollbackMessage = function (finalPrice) {
+function getRollbackMessage(finalPrice) {
   if (finalPrice >= 30000) {
-    console.log("Даем скидку в 10%");
+    return "Даем скидку в 10%";
   } else if (finalPrice >= 15000 && finalPrice < 30000) {
-    console.log("Даем скидку в 5%");
+    return "Даем скидку в 5%";
   } else if (finalPrice < 15000 && finalPrice > 0) {
-    console.log("Скидка не предусмотрена");
+    return "Скидка не предусмотрена";
   } else if (finalPrice <= 0) {
-    console.log("Что то пошло не так");
+    return "Что то пошло не так";
   }
-};
+}
+
+rollbackMessage = getRollbackMessage(fullPrice);
 
 showTypeOf(title);
 showTypeOf(screenPrice);
@@ -61,6 +63,6 @@ showTypeOf(adaptive);
 
 console.log(screens.split(" "));
 
-getRollbackMessage(fullPrice);
+console.log(rollbackMessage);
 
 getServicePercentPrices(servicePercentPrice);
