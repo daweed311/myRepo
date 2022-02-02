@@ -21,11 +21,9 @@ const isNumber = function (num) {
 const asking = function () {
   title = prompt("Как называется ваш проект?", "Калькулятор верстки").trim();
 
-  screenPrice = prompt("Сколько будет стоить данная работа?", 15000);
-
-  while (!isNumber(screenPrice)) {
-    screenPrice = prompt("Сколько будет стоить данная работа?", 15000);
-  }
+  do {
+    screenPrice = +prompt("Сколько будет стоить данная работа?");
+  } while (!isNumber(screenPrice));
 
   screens = prompt(
     "Какие типы экранов нужно разработать?",
@@ -38,6 +36,7 @@ const asking = function () {
 
 const getAllServicePrices = function () {
   let sum = 0;
+  let inputPrice;
 
   for (let i = 0; i < 2; i++) {
     if (i == 0) {
@@ -45,21 +44,24 @@ const getAllServicePrices = function () {
     } else if (i === 1) {
       service2 = prompt("Какой дополнительный тип услуги нужен?");
     }
-    sum += +prompt("Сколько это будет стоить?");
+    do {
+      inputPrice = +prompt("Сколько это будет стоить?");
+      sum += inputPrice;
+    } while (!isNumber(inputPrice));
   }
-  return sum;
+  return +sum;
 };
 
-function getFullPrice(screen, services) {
-  return screen + services;
+function getFullPrice() {
+  return screenPrice + allServicePrice;
 }
 
 const getTitle = function () {
   return title.trim()[0].toUpperCase() + title.trim().substr(1).toLowerCase();
 };
 
-const getServicePercentPrices = function (fullPrice, rollback) {
-  return Math.ceil(fullPrice * rollback);
+const getServicePercentPrices = function () {
+  return Math.ceil(fullPrice * priceForWork);
 };
 
 const showTypeOf = function (variable) {
@@ -81,8 +83,8 @@ function getRollbackMessage(finalPrice) {
 asking();
 
 allServicePrice = getAllServicePrices();
-fullPrice = getFullPrice(screenPrice, allServicePrice);
-servicePercentPrice = getServicePercentPrices(fullPrice, priceForWork);
+fullPrice = getFullPrice();
+servicePercentPrice = getServicePercentPrices();
 console.log(servicePercentPrice);
 
 title = getTitle();
@@ -91,7 +93,7 @@ showTypeOf(title);
 showTypeOf(screenPrice);
 showTypeOf(adaptive);
 
-console.log("allServie price = " + allServicePrice);
+console.log(allServicePrice);
 
 rollbackMessage = getRollbackMessage(fullPrice);
 
