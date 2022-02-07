@@ -1,5 +1,9 @@
 "use strict";
 
+const isNumber = function (num) {
+    return !isNaN(parseFloat(num)) && isFinite(num);
+  }
+
 const appData = {
   title: "",
   screens: "",
@@ -9,13 +13,10 @@ const appData = {
   fullPrice: 0,
   servicePercentPrice: 0,
   allServicePrices: 0,
-  service1: "",
-  service2: "",
-  isNumber: function (num) {
-    return !isNaN(parseFloat(num)) && isFinite(num);
-  },
+  services: [],
+  
   start: function () {
-    this.asking();
+    appData.asking();
     appData.allServicePrices = appData.getAllServicePrices();
     appData.fullPrice = appData.getFullPrice(
       appData.screenPrice,
@@ -26,7 +27,7 @@ const appData = {
       appData.fullPrice,
       appData.rollback
     );
-    this.logger();
+    appData.logger();
   },
   asking: function () {
     appData.title = prompt("Как называется ваш проект?", "Калькулятор верстки");
@@ -40,29 +41,22 @@ const appData = {
 
     do {
       appData.screenPrice = prompt("Сколько будет стоить данная работа?");
-    } while (!appData.isNumber(appData.screenPrice));
+    } while (!isNumber(appData.screenPrice));
 
     appData.adaptive = confirm("Нужен ли адаптив на сайте?");
   },
 
-  getAllServicePrices: function () {
+  getAllServicePrices: function getAllServicePrices () {
     let sum = 0;
+    let n = 0;
+    appData.services = prompt("Какой дополнительный тип услуги нужен?");
+    n = +prompt("Сколько это будет стоить?");
+    sum += n;
 
-    for (let i = 0; i < 2; i++) {
-      if (i === 0) {
-        appData.service1 = prompt("Какой дополнительный тип услуги нужен?");
-      } else if (i === 1) {
-        appData.service2 = prompt("Какой дополнительный тип услуги нужен?");
-      }
-      sum += (() => {
-        let n = 0;
-        do {
-          n = prompt("Сколько это будет стоить?");
-        } while (!appData.isNumber(n));
-        return +n;
-      })();
+    while (appData.services !== null && isNumber(n)) {
+      getAllServicePrices();
     }
-    return sum;
+    return (sum += n);
   },
 
   getFullPrice: function (screen, allServices) {
