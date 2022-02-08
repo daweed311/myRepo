@@ -1,74 +1,89 @@
 "use strict";
 
 const isNumber = function (num) {
-    return !isNaN(parseFloat(num)) && isFinite(num);
-  }
+  return !isNaN(parseFloat(num)) && isFinite(num);
+};
+
+const getString = function (question) {
+  let result;
+  do {
+    result = prompt(question);
+  } while (result == false && +result === NaN);
+  return result;
+};
 
 const appData = {
   title: "",
-  screens: "",
+  screens: [],
   screenPrice: 0,
   adaptive: true,
   rollback: 10,
   fullPrice: 0,
   servicePercentPrice: 0,
   allServicePrices: 0,
-  services: [],
-  
+  services: {},
   start: function () {
     appData.asking();
-    appData.allServicePrices = appData.getAllServicePrices();
-    appData.fullPrice = appData.getFullPrice(
-      appData.screenPrice,
-      appData.allServicePrices
-    );
-    appData.title = appData.getTitle(appData.title);
-    appData.servicePercentPrice = appData.getServicePercentPrice(
-      appData.fullPrice,
-      appData.rollback
-    );
+    appData.addPrices();
+    appData.getFullPrice();
+    appData.getTitle();
+    appData.getServicePercentPrice();
+
     appData.logger();
   },
   asking: function () {
-    appData.title = prompt("Как называется ваш проект?", "Калькулятор верстки");
+    appData.title = getString("Как называется ваш проект?");
 
-    appData.screens = prompt(
-      "Какие типы экранов нужно разработать?",
-      "Простые, Сложные, Интерактивные"
-    );
+    for (let i = 0; i < 2; i++) {
 
-    console.log(appData.screens.split(" "));
+      let name = getString("Какие типы экранов нужно разработать?");
+      let price = 0;
+
+      do {
+        price = prompt("Сколько будет стоить данная работа?");
+      } while (!isNumber(price));
+
+      appData.screens.push({id: i, name: name, price: price})
+    }
+
+    // let price;
 
     do {
-      appData.screenPrice = prompt("Сколько будет стоить данная работа?");
-    } while (!isNumber(appData.screenPrice));
-
+      let name = getString("Какой дополнительный тип услуги нужен?");
+      let priceService;
+      if (name === null) {
+        break;
+      }
+      do {
+        priceService = prompt("Сколько это будет стоить?");
+      } while (!isNumber(priceService));
+      appData.services[name] = +priceService;
+    } while (true);
     appData.adaptive = confirm("Нужен ли адаптив на сайте?");
   },
 
-  getAllServicePrices: function getAllServicePrices () {
-    let sum = 0;
-    let n = 0;
-    appData.services = prompt("Какой дополнительный тип услуги нужен?");
-    n = +prompt("Сколько это будет стоить?");
-    sum += n;
-
-    while (appData.services !== null && isNumber(n)) {
-      getAllServicePrices();
+  addPrices: function () {
+    for (let screen of appData.screens) {
+      appData.screenPrice += +screen.price;
     }
-    return (sum += n);
+    for (let key in appData.services) {
+      appData.allServicePrices += appData.services[key];
+    }
   },
 
-  getFullPrice: function (screen, allServices) {
-    return Number(screen) + Number(allServices);
+  getFullPrice: function () {
+    appData.fullPrice = +appData.screenPrice + appData.allServicePrices;
   },
 
-  getTitle: function (string) {
-    return string.trim().charAt(0).toUpperCase() + string.slice(1);
+  getTitle: function () {
+    appData.title =
+      appData.title.trim()[0].toUpperCase() +
+      appData.title.trim().substr(1).toLowerCase();
   },
 
-  getServicePercentPrice: function (price, rb) {
-    return Math.ceil(price - price * (rb / 100));
+  getServicePercentPrice: function () {
+    appData.servicePercentPrice =
+      appData.fullPrice - appData.fullPrice * (appData.rollback / 100);
   },
 
   getRollbackMessage: function (price) {
@@ -82,10 +97,12 @@ const appData = {
       return "Что-то пошло не так";
     }
   },
+
   logger: function () {
-    for (let key in appData) {
-      console.log(key + " " + appData[key]);
-    }
+    console.log(appData.fullPrice);
+    console.log(appData.servicePercentPrice);
+    console.log(appData.screens);
+    console.log(appData.getRollbackMessage(appData.fullPrice));
   },
 };
 
