@@ -9,8 +9,21 @@ const plusBtn = document.querySelector(".screen-btn");
 const other = document.querySelectorAll(".other-items");
 
 const otherPercent = [other[0], other[1]];
-const otherNum = [other[2], other[3], other[4], other[5], other[6]];
+const otherNumber = [other[2], other[3], other[4], other[5], other[6]];
 
+console.log(otherPercent);
+
+// let otherPercent = [];
+// let otherNumber = [];
+// other.forEach((node) => {
+//   if (node.classList.contains("percent")) {
+//     otherPercent.push(node);
+//   } else if (node.classList.contains("number")) {
+//     otherNumber.push(node);
+//   }
+// });
+
+console.log(otherNumber);
 const rangeInput = document.querySelector(".rollback > div > input");
 
 const rangeSpan = document.querySelector(".rollback > div > span");
@@ -23,9 +36,7 @@ for (let i = 0; i < totalInput.length; i++) {
   totalInputArr.push(totalInput[i]);
 }
 
-let allScreens = document.querySelectorAll(".screen")
-
-
+let allScreens = document.querySelectorAll(".screen");
 
 // const isNumber = function (num) {
 //   return !isNaN(parseFloat(num)) && isFinite(num);
