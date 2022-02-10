@@ -24,7 +24,7 @@ console.log(otherPercent);
 // });
 
 console.log(otherNumber);
-const rangeInput = document.querySelector(".rollback > div > input");
+const rangeInput = document.querySelector(".rollback input[type=range]");
 
 const rangeSpan = document.querySelector(".rollback > div > span");
 
