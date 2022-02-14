@@ -1,38 +1,37 @@
-const allBooks = document.querySelector(".books");
+const booksSection = document.querySelector(".books");
 
 const book = document.querySelectorAll(".book");
 console.log(book);
 
-const book2 = book[0];
-const book3 = book[4];
-const book5 = book[5];
-const book6 = book[2];
-
 const newElement = document.createElement("li");
 
-const bookList = document.querySelectorAll("li");
-console.log(bookList);
-
-const bodyElement = document.querySelector("body");
-
-const poster = document.querySelectorAll(".adv");
+const poster = document.querySelector(".adv");
 
 book[0].before(book[1]);
 book[2].before(book[4]);
 book[2].before(book[3]);
 book[2].before(book[5]);
 
-bodyElement.style.backgroundImage = "url(/image/you-dont-know-js.jpg)";
+document.body.style.backgroundImage = "url(/image/you-dont-know-js.jpg)";
 
-book3.querySelector("h2").textContent = "Книга 3. this и Прототипы Объектов";
+book[4].querySelector("h2").textContent = "Книга 3. this и Прототипы Объектов";
 
-poster[0].remove();
-
-bookList[4].before(bookList[6]);
-bookList[4].before(bookList[8]);
-
-bookList[48].before(bookList[55]);
-bookList[52].before(bookList[48]);
+poster.remove();
 
 newElement.textContent = "Глава 8: За пределами ES6";
-book6.querySelector("ul").append(newElement);
+book[2].querySelector("ul").append(newElement);
+
+const secondBookList = book[0].querySelectorAll("li")
+
+secondBookList[4].before(secondBookList[8])
+secondBookList[8].before(secondBookList[6])
+
+const fifthBookList = book[5].querySelectorAll("li")
+
+fifthBookList[3].before(fifthBookList[9])
+fifthBookList[6].before(fifthBookList[2])
+
+const sixthBookList = book[2].querySelectorAll("li")
+
+console.log(sixthBookList);
+sixthBookList[9].before(sixthBookList[10])
