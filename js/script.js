@@ -49,7 +49,7 @@ const appData = {
 
   },
 
-  initPage: function () {
+  initPage: () => {
     const input = screens[0].querySelector('input'), select = screens[0].querySelector('select');
 
     document.title = title.textContent;
@@ -78,7 +78,7 @@ const appData = {
     appData.statusScreensButton();
   },
 
-  correctScreens: function () {
+  correctScreens: () => {
     let isCorrect = true;
 
     screens.forEach((screen, index) => {
@@ -110,7 +110,7 @@ const appData = {
     appData.stop();
   },
 
-  addScreenBlock: function () {
+  addScreenBlock: () => {
     let cloneScreen;
 
     if (screens.length < maxScreens) {
@@ -121,7 +121,7 @@ const appData = {
     }
   },
 
-  delScreenBlock: function () {
+  delScreenBlock: () => {
     if (screens.length > 1) {
       screens[screens.length - 1].remove();
       screens.length--;
@@ -129,7 +129,7 @@ const appData = {
     }
   },
 
-  statusScreensButton: function () {
+  statusScreensButton: () => {
     switch (screens.length) {
       case 1:
         minusBtn.style.opacity = '0.5';
@@ -145,7 +145,7 @@ const appData = {
     appData.correctScreens();
   },
 
-  getRollback: function (event) {
+  getRollback: (event) => {
     appData.rollback = event.target.value;
     appData.showInputRollback();
 
@@ -155,7 +155,7 @@ const appData = {
     }
   },
 
-  showInputRollback: function () {
+  showInputRollback: () => {
     inputRollbackValue.textContent = appData.rollback + '%';
   },
 
@@ -166,7 +166,7 @@ const appData = {
     appData.showResult();
   },
 
-  addScreens: function () {
+  addScreens: () => {
     appData.screens.length = 0;
 
     screens.forEach((screen, index) => {
@@ -183,7 +183,7 @@ const appData = {
     });
   },
 
-  addServices: function () {
+  addServices: () => {
     const add = (item, typeValue) => {
       const check = item.querySelector('input[type=checkbox]');
       const label = item.querySelector('label');
@@ -196,7 +196,7 @@ const appData = {
     otherItemsNumber.forEach((item) => { add(item, 'Number'); });
   },
 
-  addPrices: function () {
+  addPrices: () => {
     appData.screenPrice = appData.screens.reduce((sum, screen) => sum + screen.price, 0);
     appData.screenCount = appData.screens.reduce((quantity, screen) => quantity + screen.count, 0);
 
@@ -216,11 +216,11 @@ const appData = {
   },
 
   stop: function () {
-    appData.clear();
-    appData.showResult();
+    this.clear();
+    this.showResult();
   },
 
-  clear: function () {
+  clear: () => {
     appData.screens.length = 0;
     appData.servicesPercent.length = 0;
     appData.servicesNumber.length = 0;
@@ -232,7 +232,7 @@ const appData = {
     appData.servicePercentPrice = 0;
   },
 
-  showResult: function () {
+  showResult: () => {
     total.value = appData.screenPrice;
     totalCount.value = appData.screenCount;
     totalCountOther.value = appData.servicePricesPercent + appData.servicePricesNumber;
